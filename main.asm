@@ -157,10 +157,10 @@ SUB16PRE:
 SUB16RES:
 		; Execute the function
 		; Execute the function
-		sub		r2, r0 ; subtract low bytes of operands, store to r2
-		sbc		r3, r1 ; subtract high bytes of operands, store to r3
-		; st		Z, r2  ; finally
-		; st		Z+, r3
+		sub		r0, r2 ; subtract low bytes of operands, store to r2
+		sbc		r1, r3 ; subtract high bytes of operands, store to r3
+		; st		Z, r0  ; finally
+		; st		Z+, r1
 		;brcs	CARRYSUB		; handle carry
 		ret						; End a function with RET
 CARRYSUB:
