@@ -219,43 +219,46 @@ clear_dest:
 		; First set, R21->R26
 		mul mul24_op1_1, mul24_op2_1 ; E1 low * F1 low (no carry handling)
 		add r21, r0					 ; place LSB of result in R21
-		add r22, r1					 ; place MSB of result in R22
+		adc r22, r1					 ; place MSB of result in R22
 		
 		mul mul24_op1_1, mul24_op2_2 ; E1 low * F1 mid
-		add r23, r0
-		adc r24, r1						 ; clears the carry for next add
+		add r22, r0
+		adc r23, r1						 ; clears the carry for next add
+		
 		
 		mul mul24_op1_1, mul24_op2_3 ; E1 low * F1 high
-		add r25, r0
-		adc r26, r1
+		add r23, r0
+		adc r24, r1
 
 		; Second set, R23->R28
 		mul mul24_op1_2, mul24_op2_1 ; E1 mid * F1 low
-		add r23, r0
-		adc r24, r1
-		adc r25, r0
+		add r22, r0
+		add r23, r1
+		;adc r25, r0
 
 		mul mul24_op1_2, mul24_op2_2 ; E1 mid * F1 mid
-		add r25, r0
-		adc r26, r1
+		adc r23, r0
+		add r24, r1
 
 		mul mul24_op1_2, mul24_op2_3 ; E1 mid * F1 high
-		add r27, r0
-		adc r28, r1
+		adc r24, r0
+		adc r25, r1
+		inc r25   ;accounts for carry
 
 		; Third set, R25->R30
 		mul mul24_op1_3, mul24_op2_1 ; E1 high * F1 low
-		add r25, r0
-		adc r26, r1
-		adc r27, r0
+		add r23, r0
+		add r24, r1
+		;adc r27, r0
 
 		mul mul24_op1_3, mul24_op2_2 ; E1 high * F1 mid
-		add r27, r0
-		adc r28, r1
+		adc r24, r0
+		add r25, r1
 
 		mul mul24_op1_3, mul24_op2_3 ; E1 high * F1 high
-		add r29, r0
-		adc r30, r1 
+		adc r25, r0
+		adc r26, r1 
+		inc r26  ;accounts for carry
 
 		; prime Z reg with destination addres and
 		; store all 6 bytes (lo+hi per each) into the result location, post-increment
